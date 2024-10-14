@@ -56,6 +56,7 @@ private:
   s64 mNumDecA = 0;
   bool mNumHasDecA = false;
   char mOp = '\0';
+  char mPrevOp = '\0';
   s64 mNumIntB = 0;
   s64 mNumDecB = 0;
   bool mNumHasDecB = false;
@@ -168,7 +169,12 @@ private:
   }
   void equals() {
     if(mOp == '\0') {
-      return;
+      if(mPrevOp == '\0') {
+        return;
+      }
+      mOp = mPrevOp;
+      mNumIntB = mNumIntA;
+      mNumDecB = mNumDecA;
     }
 
     f64 numA = intDecToDouble(mNumIntA, mNumDecA);
@@ -186,6 +192,7 @@ private:
     mNumIntB = 0;
     mNumDecB = 0;
     mNumHasDecB = false;
+    mPrevOp = mOp;
     mOp = '\0';
   }
   void clear() {
